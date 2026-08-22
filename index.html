@@ -1584,31 +1584,48 @@
 <div class="toast" id="toast">Laporan berhasil disalin ke clipboard!</div>
 
 <!-- Floating SoundCloud Player Widget -->
-<!-- Audio Backsound -->
-<!-- Audio Backsound -->
+<!-- Floating Audio Widget Interaktif -->
+<div id="audioControlContainer" style="position: fixed; bottom: 20px; right: 20px; z-index: 99999; background: #12161f; border: 1px solid #06b6d4; padding: 10px 14px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; font-family: monospace;">
+  <button id="btnPlaySound" style="background: #06b6d4; color: #000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+    ▶️ Play Backsound
+  </button>
+  <span style="font-size: 11px; color: #94a3b8;">Ibu Bilang Pakai Ini Dulu</span>
+</div>
+
 <audio id="bgMusic" loop preload="auto">
-  <source src="backsound.mp3" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/pernanplanc08/Blair-hardline/main/backsound.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-  function playAudio() {
-    const audio = document.getElementById('bgMusic');
-    if (audio) {
-      audio.volume = 0.3;
+  const audio = document.getElementById('bgMusic');
+  const btn = document.getElementById('btnPlaySound');
+  let isPlaying = false;
+
+  function toggleAudio() {
+    if (!isPlaying) {
+      audio.volume = 0.4;
       audio.play().then(() => {
-        console.log("Audio berhasil diputar");
-        // Hapus event listener jika audio sudah berhasil jalan
-        document.removeEventListener('click', playAudio);
-        document.removeEventListener('keydown', playAudio);
+        isPlaying = true;
+        btn.textContent = '⏸️ Pause';
+        btn.style.background = '#f59e0b';
       }).catch(err => {
-        console.log("Gagal memutar audio:", err);
+        alert("Gagal memutar lagu. Re-upload ulang file MP3 di GitHub kamu.");
       });
+    } else {
+      audio.pause();
+      isPlaying = false;
+      btn.textContent = '▶️ Play Backsound';
+      btn.style.background = '#06b6d4';
     }
   }
 
-  // Dengarkan klik ATAU tombol apa saja di keyboard
-  document.addEventListener('click', playAudio);
-  document.addEventListener('keydown', playAudio);
+  btn.addEventListener('click', toggleAudio);
+
+  // Otomatis play saat pertama kali layar diklik
+  document.addEventListener('click', function autoPlayFirst() {
+    if (!isPlaying) toggleAudio();
+    document.removeEventListener('click', autoPlayFirst);
+  }, { once: true });
 </script>
 (function(){
   'use strict';
