@@ -62,7 +62,6 @@
     padding-bottom: 80px;
   }
 
-  /* Custom scrollbar */
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--bg-dark); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
@@ -76,7 +75,6 @@
     padding: 0 16px;
   }
 
-  /* ---------- Top Header ---------- */
   header.hud-header {
     border-bottom: 1px solid var(--border);
     background: rgba(18, 22, 31, 0.85);
@@ -215,7 +213,6 @@
     color: #000;
   }
 
-  /* ---------- Sticky HUD Bar ---------- */
   .sticky-hud {
     position: sticky;
     top: 0;
@@ -307,7 +304,6 @@
     font-weight: 700;
   }
 
-  /* ---------- Navigation Tabs ---------- */
   .nav-tabs-wrapper {
     margin-top: 14px;
     border-bottom: 1px solid var(--border);
@@ -352,15 +348,6 @@
     background: var(--cyan-dim);
   }
 
-  .tab-btn .badge {
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.1);
-    color: inherit;
-  }
-
-  /* ---------- Main Panels ---------- */
   main {
     margin-top: 20px;
   }
@@ -379,7 +366,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ---------- Global Notification Banner ---------- */
   .banner-zone {
     margin-bottom: 20px;
   }
@@ -403,11 +389,6 @@
     background: rgba(244, 63, 94, 0.12);
     border: 1px solid var(--rose);
     color: #fecdd3;
-  }
-
-  .alert-banner.info {
-    background: rgba(6, 182, 212, 0.1);
-    border: 1px solid var(--cyan);
   }
 
   .banner-left {
@@ -437,7 +418,6 @@
     color: var(--text-muted);
   }
 
-  /* ---------- Live Ghost Candidate Chips ---------- */
   .candidate-tray {
     background: var(--bg-panel);
     border: 1px solid var(--border);
@@ -514,7 +494,6 @@
     border-color: transparent;
   }
 
-  /* ---------- TAB 1: EVIDENCE JOURNAL ---------- */
   .evidence-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -602,7 +581,6 @@
     gap: 6px;
   }
 
-  /* BUTTONS STYLING - PROMINENT & HIGH VISIBILITY */
   .tri-btn {
     font-family: var(--font-mono);
     font-size: 12px;
@@ -627,7 +605,6 @@
     transform: scale(1.04);
   }
 
-  /* Active YES styling (Emerald Green) */
   .tri-btn[data-state="yes"].active,
   .tri-btn[data-v="ya"].active,
   .tri-btn.active-yes {
@@ -639,7 +616,6 @@
     transform: scale(1.05);
   }
 
-  /* Active NO styling (Rose Red) */
   .tri-btn[data-state="no"].active,
   .tri-btn[data-v="tidak"].active,
   .tri-btn.active-no {
@@ -659,7 +635,6 @@
     line-height: 1.4;
   }
 
-  /* Matrix table */
   .matrix-wrapper {
     background: var(--bg-panel);
     border: 1px solid var(--border);
@@ -726,7 +701,6 @@
     font-weight: 700;
   }
 
-  /* ---------- TAB 2: NO-EVIDENCE PROTOCOL ---------- */
   .protocol-section {
     margin-bottom: 30px;
   }
@@ -761,7 +735,6 @@
     gap: 10px;
   }
 
-  /* Card State Highlighting */
   .test-item {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -878,7 +851,6 @@
     border: 1px solid var(--border);
   }
 
-  /* ---------- TAB 3: SPEED & BPM METRONOME ---------- */
   .metronome-box {
     background: var(--bg-panel);
     border: 1px solid var(--border);
@@ -1020,7 +992,6 @@
     color: var(--text-muted);
   }
 
-  /* ---------- TAB 4: CURSED POSSESSIONS & ITEMS ---------- */
   .cursed-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -1113,7 +1084,6 @@
     color: var(--text-main);
   }
 
-  /* Survival Equipment Grid */
   .equip-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -1143,7 +1113,6 @@
     line-height: 1.4;
   }
 
-  /* ---------- TAB 5: GHOST DIRECTORY / ENCYCLOPEDIA ---------- */
   .directory-search-bar {
     display: flex;
     gap: 10px;
@@ -1328,7 +1297,6 @@
     line-height: 1.4;
   }
 
-  /* Activity dot meter */
   .dotmeter {
     display: inline-flex;
     gap: 3px;
@@ -1348,7 +1316,6 @@
     box-shadow: 0 0 5px var(--amber-glow);
   }
 
-  /* ---------- Toast / Copy Feedback ---------- */
   .toast {
     position: fixed;
     bottom: 24px;
@@ -1373,7 +1340,6 @@
     transform: translateY(0);
   }
 
-  /* Responsive tweaks */
   @media (max-width: 640px) {
     .header-content { padding: 14px 12px; }
     .hud-grid { flex-direction: column; align-items: stretch; }
@@ -1389,7 +1355,19 @@
 </head>
 <body>
 
-<!-- Header HUD -->
+<!-- Floating Audio Controller Widget -->
+<div id="audioWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 99999; background: #12161f; border: 1px solid #06b6d4; padding: 10px 14px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace;">
+  <button id="btnPlayBgMusic" style="background: #06b6d4; color: #000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: all 0.2s ease;">
+    ▶️ Play Backsound
+  </button>
+  <span style="font-size: 11px; color: #94a3b8;">Ibu Bilang Pakai Ini Dulu</span>
+</div>
+
+<audio id="bgMusic" loop preload="auto" autoplay>
+  <!-- Link Direct Raw CDN dari GitHub Repository pernanplanc08/Blair-hardline -->
+  <source src="https://raw.githubusercontent.com/pernanplanc08/Blair-hardline/main/backsound.mp3" type="audio/mpeg">
+</audio>
+
 <header class="hud-header">
   <div class="container header-content">
     <div class="brand-area">
@@ -1406,7 +1384,7 @@
         📋 Salin Laporan
       </button>
       <button class="btn" id="btnAudioToggle" title="Nyalakan/Matikan Efek Suara & Metronom">
-        🔊 Audio: ON
+        🔊 Audio SFX: ON
       </button>
       <button class="btn btn-rose" id="btnResetAll" title="Reset semua data eliminasi & bukti">
         ↺ Reset Total
@@ -1415,7 +1393,6 @@
   </div>
 </header>
 
-<!-- Sticky Stats & Difficulty Bar -->
 <div class="sticky-hud">
   <div class="container hud-grid">
     <div class="hud-stats">
@@ -1441,7 +1418,6 @@
   </div>
 </div>
 
-<!-- Navigation Tabs -->
 <div class="nav-tabs-wrapper">
   <div class="container">
     <nav class="nav-tabs">
@@ -1466,10 +1442,8 @@
 
 <div class="container">
   <main>
-    <!-- Dynamic Alert Banner -->
     <div class="banner-zone" id="bannerZone"></div>
 
-    <!-- Candidate Chips Live Tray -->
     <div class="candidate-tray">
       <div class="tray-header">
         <span class="tray-title">🏷️ Filter Cepat Ghost Pool:</span>
@@ -1478,7 +1452,6 @@
       <div class="tray-chips" id="candidateChips"></div>
     </div>
 
-    <!-- TAB 1: EVIDENCE JOURNAL -->
     <section class="tab-panel active" id="tab-evidence">
       <div class="sec-heading">
         <div>
@@ -1513,7 +1486,6 @@
       </div>
     </section>
 
-    <!-- TAB 2: NO-EVIDENCE PROTOCOL -->
     <section class="tab-panel" id="tab-noevidence">
       <div class="protocol-section">
         <div class="sec-heading">
@@ -1536,7 +1508,6 @@
       </div>
     </section>
 
-    <!-- TAB 3: SPEED & BPM METRONOME -->
     <section class="tab-panel" id="tab-speed">
       <div class="sec-heading">
         <div>
@@ -1570,7 +1541,6 @@
       </div>
     </section>
 
-    <!-- TAB 4: CURSED POSSESSIONS & ITEMS -->
     <section class="tab-panel" id="tab-cursed">
       <div class="sec-heading">
         <div>
@@ -1591,7 +1561,6 @@
       <div class="equip-grid" id="equipGrid"></div>
     </section>
 
-    <!-- TAB 5: GHOST DIRECTORY -->
     <section class="tab-panel" id="tab-directory">
       <div class="sec-heading">
         <div>
@@ -1618,12 +1587,68 @@
 <div class="toast" id="toast">Laporan berhasil disalin ke clipboard!</div>
 
 <script>
+// --- Script Pemutar Audio Backsound (Auto-Play Bypass) ---
+(function initBacksoundPlayer() {
+  const bgAudio = document.getElementById('bgMusic');
+  const playBtn = document.getElementById('btnPlayBgMusic');
+  let isPlaying = false;
+
+  function playAudio() {
+    bgAudio.volume = 0.4;
+    bgAudio.play().then(() => {
+      isPlaying = true;
+      if (playBtn) {
+        playBtn.textContent = '⏸️ Pause';
+        playBtn.style.background = '#f59e0b';
+      }
+    }).catch(err => {
+      console.log("Autoplay awal ditahan browser. Menunggu interaksi pertama pengguna.");
+    });
+  }
+
+  function pauseAudio() {
+    bgAudio.pause();
+    isPlaying = false;
+    if (playBtn) {
+      playBtn.textContent = '▶️ Play Backsound';
+      playBtn.style.background = '#06b6d4';
+    }
+  }
+
+  function toggleMusic() {
+    if (!isPlaying) {
+      playAudio();
+    } else {
+      pauseAudio();
+    }
+  }
+
+  // 1. Coba putar otomatis langsung saat halaman dimuat
+  playAudio();
+
+  // 2. Jika browser memblokir, putar otomatis begitu pengguna melakukan klik/touch/key pertama di layar
+  const unlockEvents = ['click', 'touchstart', 'keydown', 'scroll'];
+  const unlockAudio = () => {
+    if (!isPlaying) {
+      playAudio();
+    }
+    unlockEvents.forEach(evt => document.removeEventListener(evt, unlockAudio));
+  };
+
+  unlockEvents.forEach(evt => document.addEventListener(evt, unlockAudio, { once: true }));
+
+  if (playBtn) {
+    playBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMusic();
+    });
+  }
+})();
+
+// --- Script Utama Blair HUD OS ---
 (function(){
   'use strict';
 
-  // -------------------------------------------------------------
-  // DATA DEFINITION: 21 GHOSTS IN BLAIR ROBLOX
-  // -------------------------------------------------------------
   const EVIDENCES = [
     { id: 'emf5', name: 'EMF Level 5', tool: 'EMF Reader', icon: '📡', desc: 'Jarum EMF naik penuh ke angka 5 bar merah saat interaksi hantu.' },
     { id: 'writing', name: 'Ghost Writing', tool: 'Buku Catatan', icon: '📖', desc: 'Hantu menulis tulisan/simbol gaib di buku yang ditaruh di kamarnya.' },
@@ -1826,9 +1851,6 @@
     }
   ];
 
-  // -------------------------------------------------------------
-  // NO-EVIDENCE UNIVERSAL & SPECIFIC TESTS
-  // -------------------------------------------------------------
   const TESTS_UNIVERSAL = [
     {
       id: 'u-salt',
@@ -1882,9 +1904,6 @@
     hint: `Jika <strong>YA</strong> &rarr; Konfirmasi <strong>${g.name}</strong>. Jika <strong>TIDAK</strong> &rarr; ${g.name} tersingkir.`
   }));
 
-  // -------------------------------------------------------------
-  // CURSED POSSESSIONS & ITEMS DATA
-  // -------------------------------------------------------------
   const CURSED_ITEMS = [
     {
       id: 'spirit-board',
@@ -1951,15 +1970,12 @@
     { name: 'Harrow (Jauh Dari Kamar)', sub: 'Melambat drastis di luar kamar', mps: '1.2 m/s', bpm: 85 },
   ];
 
-  // -------------------------------------------------------------
-  // APPLICATION STATE & STORAGE
-  // -------------------------------------------------------------
   const STORAGE_KEY = 'blair_os_state_v2';
   
   let appState = {
-    difficulty: 3, // 3: Normal, 2: Nightmare, 1: Insanity, 0: No-Evidence
-    evidenceState: {}, // { emf5: 'yes' | 'no' }
-    testState: {}, // { testId: 'ya' | 'tidak' }
+    difficulty: 3,
+    evidenceState: {},
+    testState: {},
     audioEnabled: true,
   };
 
@@ -1983,9 +1999,6 @@
     } catch(e) {}
   }
 
-  // -------------------------------------------------------------
-  // AUDIO SYNTHESIZER (WEB AUDIO API)
-  // -------------------------------------------------------------
   let audioCtx = null;
   let metroInterval = null;
   let currentMetroBpm = 120;
@@ -2025,7 +2038,6 @@
         osc.start(now);
         osc.stop(now + 0.04);
       } else if (type === 'step') {
-        // Wooden floor thud
         osc.type = 'sine';
         osc.frequency.setValueAtTime(140, now);
         osc.frequency.exponentialRampToValueAtTime(30, now + 0.08);
@@ -2035,8 +2047,8 @@
         osc.stop(now + 0.08);
       } else if (type === 'found') {
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(523.25, now); // C5
-        osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.08);
         gain.gain.setValueAtTime(0.25, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
         osc.start(now);
@@ -2053,20 +2065,14 @@
     } catch(e) {}
   }
 
-  // -------------------------------------------------------------
-  // ELIMINATION ENGINE & CANDIDATE COMPUTATION
-  // -------------------------------------------------------------
   function computeLiveCandidates() {
     const foundEvidences = Object.keys(appState.evidenceState).filter(k => appState.evidenceState[k] === 'yes');
     const ruledOutEvidences = Object.keys(appState.evidenceState).filter(k => appState.evidenceState[k] === 'no');
 
     let pool = new Set(GHOSTS.map(g => g.id));
-
-    // 1. Evidence Filtering based on Selected Difficulty
-    const maxEvidences = appState.difficulty; // 3, 2, 1, or 0
+    const maxEvidences = appState.difficulty;
 
     GHOSTS.forEach(g => {
-      // If ghost lacks ANY confirmed evidence, it is impossible
       for (const reqEvi of foundEvidences) {
         if (!g.evidences.includes(reqEvi)) {
           pool.delete(g.id);
@@ -2074,7 +2080,6 @@
         }
       }
 
-      // In Normal mode (3 evidences), if an evidence is ruled out, ghost possessing that evidence is impossible
       if (maxEvidences === 3) {
         for (const outEvi of ruledOutEvidences) {
           if (g.evidences.includes(outEvi)) {
@@ -2085,7 +2090,6 @@
       }
     });
 
-    // 2. Trait & Test Filtering
     const allTests = [...TESTS_UNIVERSAL, ...TESTS_SPECIFIC];
     allTests.forEach(t => {
       const v = appState.testState[t.id];
@@ -2099,9 +2103,6 @@
     return pool;
   }
 
-  // -------------------------------------------------------------
-  // RENDERING FUNCTIONS
-  // -------------------------------------------------------------
   function renderAll() {
     const pool = computeLiveCandidates();
     renderHUD(pool);
@@ -2133,15 +2134,13 @@
       statusLabel.textContent = `Investigasi Aktif (${pool.size} Kemungkinan)`;
     }
 
-    // Difficulty buttons sync
     document.querySelectorAll('.diff-btn').forEach(btn => {
       const m = parseInt(btn.dataset.mode, 10);
       btn.classList.toggle('active', m === appState.difficulty);
     });
 
-    // Audio button sync
     const audioBtn = document.getElementById('btnAudioToggle');
-    audioBtn.textContent = appState.audioEnabled ? '🔊 Audio: ON' : '🔇 Audio: OFF';
+    audioBtn.textContent = appState.audioEnabled ? '🔊 Audio SFX: ON' : '🔇 Audio SFX: OFF';
   }
 
   function renderBanner(pool) {
@@ -2205,7 +2204,6 @@
     const grid = document.getElementById('evidenceGrid');
     grid.innerHTML = '';
 
-    // Calculate possible evidences among remaining candidates
     const remainingGhosts = GHOSTS.filter(g => pool.has(g.id));
     const possibleEvidences = new Set();
     remainingGhosts.forEach(g => g.evidences.forEach(e => possibleEvidences.add(e)));
@@ -2420,9 +2418,6 @@
     });
   }
 
-  // -------------------------------------------------------------
-  // SPEED METRONOME ENGINE & TAP TEMPO
-  // -------------------------------------------------------------
   function startMetronome(bpm) {
     stopMetronome();
     currentMetroBpm = bpm;
@@ -2434,7 +2429,6 @@
     isMetroPlaying = true;
     document.getElementById('btnToggleMetro').textContent = '⏹️ Hentikan Audio Metronom';
 
-    // Play first beat immediately
     playSound('step');
     beater.classList.add('beat');
     setTimeout(() => beater.classList.remove('beat'), 60);
@@ -2482,7 +2476,6 @@
     });
   }
 
-  // Tap Tempo state
   let tapTimes = [];
   function registerTap() {
     initAudio();
@@ -2490,7 +2483,6 @@
     const now = performance.now();
     tapTimes.push(now);
 
-    // Keep only last 6 taps within 3 seconds
     if (tapTimes.length > 6) tapTimes.shift();
     tapTimes = tapTimes.filter(t => (now - t) < 3000);
 
@@ -2510,9 +2502,6 @@
     }
   }
 
-  // -------------------------------------------------------------
-  // CURSED POSSESSIONS & TAROT SIMULATOR
-  // -------------------------------------------------------------
   const TAROT_DECK = [
     { name: 'The Sun ☀️', desc: 'Sanity pulih 100%!', color: 'var(--amber)' },
     { name: 'The Moon 🌙', desc: 'Sanity langsung anjlok ke 0%!', color: 'var(--text-muted)' },
@@ -2557,7 +2546,6 @@
       grid.appendChild(card);
     });
 
-    // Tarot button listener
     const drawBtn = document.getElementById('btnDrawTarot');
     if (drawBtn) {
       drawBtn.addEventListener('click', () => {
@@ -2570,7 +2558,6 @@
       });
     }
 
-    // Render Equipment
     const eqGrid = document.getElementById('equipGrid');
     eqGrid.innerHTML = '';
     SURVIVAL_EQUIP.forEach(eq => {
@@ -2584,9 +2571,6 @@
     });
   }
 
-  // -------------------------------------------------------------
-  // GLOBAL ACTIONS & UTILITIES
-  // -------------------------------------------------------------
   window.resetBoard = function() {
     if (confirm('Apakah Anda yakin ingin me-reset seluruh jurnal bukti dan eliminasi?')) {
       appState.evidenceState = {};
@@ -2667,13 +2651,9 @@
     });
   }
 
-  // -------------------------------------------------------------
-  // EVENT LISTENERS INITIALIZATION
-  // -------------------------------------------------------------
   document.addEventListener('DOMContentLoaded', () => {
     loadSavedState();
 
-    // Tab Navigation
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -2688,7 +2668,6 @@
       });
     });
 
-    // Difficulty Picker
     document.querySelectorAll('.diff-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         appState.difficulty = parseInt(btn.dataset.mode, 10);
@@ -2698,7 +2677,6 @@
       });
     });
 
-    // Audio SFX Toggle
     document.getElementById('btnAudioToggle').addEventListener('click', () => {
       appState.audioEnabled = !appState.audioEnabled;
       if (!appState.audioEnabled) stopMetronome();
@@ -2706,13 +2684,9 @@
       renderHUD(computeLiveCandidates());
     });
 
-    // Reset Button
     document.getElementById('btnResetAll').addEventListener('click', window.resetBoard);
-
-    // Copy Report
     document.getElementById('btnCopyReport').addEventListener('click', copyReport);
 
-    // Metronome Controls
     document.getElementById('btnToggleMetro').addEventListener('click', () => {
       if (isMetroPlaying) {
         stopMetronome();
@@ -2721,19 +2695,16 @@
       }
     });
 
-    // Tap Tempo button & spacebar
     const tapBtn = document.getElementById('btnTapTempo');
     tapBtn.addEventListener('click', registerTap);
 
     window.addEventListener('keydown', (e) => {
-      // If pressing space while in speed tab and not typing in search
       if (e.code === 'Space' && document.getElementById('tab-speed').classList.contains('active') && document.activeElement.tagName !== 'INPUT') {
         e.preventDefault();
         registerTap();
       }
     });
 
-    // Directory Search & Filter
     document.getElementById('ghostSearchInput').addEventListener('input', window.filterGhostDirectory);
     document.querySelectorAll('.threat-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -2743,7 +2714,6 @@
       });
     });
 
-    // Initial Renders
     renderAll();
     renderSpeedPresets();
     renderCursedItems();
