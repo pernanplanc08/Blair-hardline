@@ -59,7 +59,7 @@
     font-family: var(--font-sans);
     line-height: 1.5;
     min-height: 100vh;
-    padding-bottom: 140px;
+    padding-bottom: 80px;
   }
 
   ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -1355,7 +1355,19 @@
 </head>
 <body>
 
-<!-- Header HUD -->
+<!-- Floating Audio Controller Widget -->
+<div id="audioWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 99999; background: #12161f; border: 1px solid #06b6d4; padding: 10px 14px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace;">
+  <button id="btnPlayBgMusic" style="background: #06b6d4; color: #000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: all 0.2s ease;">
+    ▶️ Play Backsound
+  </button>
+  <span style="font-size: 11px; color: #94a3b8;">Ibu Bilang Pakai Ini Dulu</span>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
+  <!-- Link Stream CDN Audio Murni -->
+  <source src="https://files.catbox.moe/s6v34q.mp3" type="audio/mpeg">
+</audio>
+
 <header class="hud-header">
   <div class="container header-content">
     <div class="brand-area">
@@ -1372,7 +1384,7 @@
         📋 Salin Laporan
       </button>
       <button class="btn" id="btnAudioToggle" title="Nyalakan/Matikan Efek Suara & Metronom">
-        🔊 Audio: ON
+        🔊 Audio SFX: ON
       </button>
       <button class="btn btn-rose" id="btnResetAll" title="Reset semua data eliminasi & bukti">
         ↺ Reset Total
@@ -1381,7 +1393,6 @@
   </div>
 </header>
 
-<!-- Sticky Stats & Difficulty Bar -->
 <div class="sticky-hud">
   <div class="container hud-grid">
     <div class="hud-stats">
@@ -1407,7 +1418,6 @@
   </div>
 </div>
 
-<!-- Navigation Tabs -->
 <div class="nav-tabs-wrapper">
   <div class="container">
     <nav class="nav-tabs">
@@ -1432,10 +1442,8 @@
 
 <div class="container">
   <main>
-    <!-- Dynamic Alert Banner -->
     <div class="banner-zone" id="bannerZone"></div>
 
-    <!-- Candidate Chips Live Tray -->
     <div class="candidate-tray">
       <div class="tray-header">
         <span class="tray-title">🏷️ Filter Cepat Ghost Pool:</span>
@@ -1444,7 +1452,6 @@
       <div class="tray-chips" id="candidateChips"></div>
     </div>
 
-    <!-- TAB 1: EVIDENCE JOURNAL -->
     <section class="tab-panel active" id="tab-evidence">
       <div class="sec-heading">
         <div>
@@ -1479,7 +1486,6 @@
       </div>
     </section>
 
-    <!-- TAB 2: NO-EVIDENCE PROTOCOL -->
     <section class="tab-panel" id="tab-noevidence">
       <div class="protocol-section">
         <div class="sec-heading">
@@ -1502,7 +1508,6 @@
       </div>
     </section>
 
-    <!-- TAB 3: SPEED & BPM METRONOME -->
     <section class="tab-panel" id="tab-speed">
       <div class="sec-heading">
         <div>
@@ -1536,7 +1541,6 @@
       </div>
     </section>
 
-    <!-- TAB 4: CURSED POSSESSIONS & ITEMS -->
     <section class="tab-panel" id="tab-cursed">
       <div class="sec-heading">
         <div>
@@ -1557,7 +1561,6 @@
       <div class="equip-grid" id="equipGrid"></div>
     </section>
 
-    <!-- TAB 5: GHOST DIRECTORY -->
     <section class="tab-panel" id="tab-directory">
       <div class="sec-heading">
         <div>
@@ -1583,50 +1586,43 @@
 
 <div class="toast" id="toast">Laporan berhasil disalin ke clipboard!</div>
 
-<!-- Floating SoundCloud Player Widget -->
-<!-- Floating Audio Widget Interaktif -->
-<div id="audioControlContainer" style="position: fixed; bottom: 20px; right: 20px; z-index: 99999; background: #12161f; border: 1px solid #06b6d4; padding: 10px 14px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; font-family: monospace;">
-  <button id="btnPlaySound" style="background: #06b6d4; color: #000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">
-    ▶️ Play Backsound
-  </button>
-  <span style="font-size: 11px; color: #94a3b8;">Ibu Bilang Pakai Ini Dulu</span>
-</div>
-
-<audio id="bgMusic" loop preload="auto">
-  <source src="https://raw.githubusercontent.com/pernanplanc08/Blair-hardline/main/IBU BILANG PAKAI INI DULU FUL SONG __ LAGU SEDIH SOUND TRENDING - VIRAL TERBARU 2026.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-  const audio = document.getElementById('bgMusic');
-  const btn = document.getElementById('btnPlaySound');
+// --- Script Pemutar Audio Backsound ---
+(function initBacksoundPlayer() {
+  const bgAudio = document.getElementById('bgMusic');
+  const playBtn = document.getElementById('btnPlayBgMusic');
   let isPlaying = false;
 
-  function toggleAudio() {
+  function toggleMusic() {
     if (!isPlaying) {
-      audio.volume = 0.4;
-      audio.play().then(() => {
+      bgAudio.volume = 0.4;
+      bgAudio.play().then(() => {
         isPlaying = true;
-        btn.textContent = '⏸️ Pause';
-        btn.style.background = '#f59e0b';
+        playBtn.textContent = '⏸️ Pause';
+        playBtn.style.background = '#f59e0b';
       }).catch(err => {
-        alert("Gagal memutar lagu. Re-upload ulang file MP3 di GitHub kamu.");
+        console.log("Autoplay ditolak browser:", err);
       });
     } else {
-      audio.pause();
+      bgAudio.pause();
       isPlaying = false;
-      btn.textContent = '▶️ Play Backsound';
-      btn.style.background = '#06b6d4';
+      playBtn.textContent = '▶️ Play Backsound';
+      playBtn.style.background = '#06b6d4';
     }
   }
 
-  btn.addEventListener('click', toggleAudio);
+  if (playBtn) playBtn.addEventListener('click', toggleMusic);
 
-  // Otomatis play saat pertama kali layar diklik
-  document.addEventListener('click', function autoPlayFirst() {
-    if (!isPlaying) toggleAudio();
-    document.removeEventListener('click', autoPlayFirst);
+  // Otomatis putar saat interaksi klik pertama di area mana saja
+  document.addEventListener('click', function autoPlayFirstClick(e) {
+    if (e.target !== playBtn && !isPlaying) {
+      toggleMusic();
+    }
+    document.removeEventListener('click', autoPlayFirstClick);
   }, { once: true });
-</script>
+})();
+
+// --- Script Utama Blair HUD OS ---
 (function(){
   'use strict';
 
@@ -2108,7 +2104,7 @@
 
     if (pool.size === 1) {
       const g = GHOSTS.find(x => pool.has(x.id));
-      statusLabel.innerHTML = `✅ Terpecahkan: <strong style="color: var(--emerald);">${g ? g.name : ''}</strong>`;
+      statusLabel.innerHTML = `✅ Terpecahkan: <strong style="color: var(--emerald);">${g.name}</strong>`;
     } else if (pool.size === 0) {
       statusLabel.innerHTML = `<span style="color: var(--rose);">⚠️ 0 Kandidat (Kontradiksi Bukti)</span>`;
     } else {
@@ -2121,7 +2117,7 @@
     });
 
     const audioBtn = document.getElementById('btnAudioToggle');
-    audioBtn.textContent = appState.audioEnabled ? '🔊 Audio: ON' : '🔇 Audio: OFF';
+    audioBtn.textContent = appState.audioEnabled ? '🔊 Audio SFX: ON' : '🔇 Audio SFX: OFF';
   }
 
   function renderBanner(pool) {
@@ -2131,7 +2127,6 @@
     if (pool.size === 1) {
       const id = [...pool][0];
       const g = GHOSTS.find(x => x.id === id);
-      if (!g) return;
       const el = document.createElement('div');
       el.className = 'alert-banner solved';
       el.innerHTML = `
@@ -2140,17 +2135,11 @@
           <div class="banner-title">${g.name} (File #${g.code})</div>
           <div class="banner-desc"><strong>Karakteristik Kunci:</strong> ${g.quick}</div>
         </div>
-        <button class="btn btn-cyan" id="btnGoToDossier">
+        <button class="btn btn-cyan" onclick="document.querySelector('[data-tab=\\'tab-directory\\']').click(); document.getElementById('ghostSearchInput').value='${g.name}'; window.filterGhostDirectory();">
           Buka Dossier &rarr;
         </button>
       `;
       zone.appendChild(el);
-      document.getElementById('btnGoToDossier').addEventListener('click', () => {
-        document.querySelector('[data-tab="tab-directory"]').click();
-        const input = document.getElementById('ghostSearchInput');
-        input.value = g.name;
-        window.filterGhostDirectory();
-      });
     } else if (pool.size === 0) {
       const el = document.createElement('div');
       el.className = 'alert-banner warn';
@@ -2160,12 +2149,11 @@
           <div class="banner-title">0 Kandidat Hantu Tersisa</div>
           <div class="banner-desc">Ada jawaban bukti atau tes yang saling bertentangan. Periksa kembali bukti atau pengujian terakhir yang Anda ubah.</div>
         </div>
-        <button class="btn btn-rose" id="btnResetBanner">
+        <button class="btn btn-rose" onclick="window.resetBoard();">
           Reset Jurnal
         </button>
       `;
       zone.appendChild(el);
-      document.getElementById('btnResetBanner').addEventListener('click', window.resetBoard);
     }
   }
 
@@ -2391,7 +2379,7 @@
             <span class="detail-val">${g.behavior}</span>
           </div>
           <div class="detail-row" style="margin-top: 4px;">
-            <button class="btn btn-amber btn-confirm-ghost" style="width: 100%; justify-content: center;" data-ghost="${g.id}">
+            <button class="btn btn-amber" style="width: 100%; justify-content: center;" onclick="window.confirmGhostDirectly('${g.id}')">
               🎯 Tandai Hantu Ini Sebagai Jawaban
             </button>
           </div>
@@ -2402,14 +2390,6 @@
         card.classList.toggle('open');
         playSound('click');
       });
-
-      const confirmBtn = card.querySelector('.btn-confirm-ghost');
-      if (confirmBtn) {
-        confirmBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          window.confirmGhostDirectly(g.id);
-        });
-      }
 
       grid.appendChild(card);
     });
@@ -2597,8 +2577,7 @@
 
   window.filterGhostDirectory = function() {
     const query = document.getElementById('ghostSearchInput').value.toLowerCase().trim();
-    const activeBtn = document.querySelector('.threat-btn.active');
-    const activeThreat = activeBtn ? activeBtn.dataset.threat : 'all';
+    const activeThreat = document.querySelector('.threat-btn.active').dataset.threat;
 
     document.querySelectorAll('.ghost-dossier').forEach(card => {
       const name = card.dataset.name;
@@ -2627,12 +2606,10 @@
 
     if (pool.size === 1) {
       const g = GHOSTS.find(x => pool.has(x.id));
-      if (g) {
-        text += `🎯 GHOST TERKONFIRMASI: **${g.name}**\n`;
-        text += `• Bukti Wajib: ${g.evidences.join(', ')}\n`;
-        text += `• Hunt Threshold: ${g.threshold}\n`;
-        text += `• Trait Kunci: ${g.quick}\n`;
-      }
+      text += `🎯 GHOST TERKONFIRMASI: **${g.name}**\n`;
+      text += `• Bukti Wajib: ${g.evidences.join(', ')}\n`;
+      text += `• Hunt Threshold: ${g.threshold}\n`;
+      text += `• Trait Kunci: ${g.quick}\n`;
     } else if (pool.size === 0) {
       text += `⚠️ Kontradiksi (0 kandidat). Cek ulang bukti!\n`;
     } else {
@@ -2718,6 +2695,7 @@
     renderSpeedPresets();
     renderCursedItems();
   });
+
 })();
 </script>
 </body>
