@@ -1363,9 +1363,9 @@
   <span style="font-size: 11px; color: #94a3b8;">Ibu Bilang Pakai Ini Dulu</span>
 </div>
 
-<audio id="bgMusic" loop preload="auto">
-  <!-- Link Stream CDN Audio Murni -->
-  <source src="https://pernanplanc08.github.io/Blair-hardline/backsound.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop preload="auto" autoplay>
+  <!-- Link Direct Raw CDN dari GitHub Repository pernanplanc08/Blair-hardline -->
+  <source src="https://raw.githubusercontent.com/pernanplanc08/Blair-hardline/main/backsound.mp3" type="audio/mpeg">
 </audio>
 
 <header class="hud-header">
@@ -1587,39 +1587,62 @@
 <div class="toast" id="toast">Laporan berhasil disalin ke clipboard!</div>
 
 <script>
-// --- Script Pemutar Audio Backsound ---
+// --- Script Pemutar Audio Backsound (Auto-Play Bypass) ---
 (function initBacksoundPlayer() {
   const bgAudio = document.getElementById('bgMusic');
   const playBtn = document.getElementById('btnPlayBgMusic');
   let isPlaying = false;
 
-  function toggleMusic() {
-    if (!isPlaying) {
-      bgAudio.volume = 0.4;
-      bgAudio.play().then(() => {
-        isPlaying = true;
+  function playAudio() {
+    bgAudio.volume = 0.4;
+    bgAudio.play().then(() => {
+      isPlaying = true;
+      if (playBtn) {
         playBtn.textContent = '⏸️ Pause';
         playBtn.style.background = '#f59e0b';
-      }).catch(err => {
-        console.log("Autoplay ditolak browser:", err);
-      });
-    } else {
-      bgAudio.pause();
-      isPlaying = false;
+      }
+    }).catch(err => {
+      console.log("Autoplay awal ditahan browser. Menunggu interaksi pertama pengguna.");
+    });
+  }
+
+  function pauseAudio() {
+    bgAudio.pause();
+    isPlaying = false;
+    if (playBtn) {
       playBtn.textContent = '▶️ Play Backsound';
       playBtn.style.background = '#06b6d4';
     }
   }
 
-  if (playBtn) playBtn.addEventListener('click', toggleMusic);
-
-  // Otomatis putar saat interaksi klik pertama di area mana saja
-  document.addEventListener('click', function autoPlayFirstClick(e) {
-    if (e.target !== playBtn && !isPlaying) {
-      toggleMusic();
+  function toggleMusic() {
+    if (!isPlaying) {
+      playAudio();
+    } else {
+      pauseAudio();
     }
-    document.removeEventListener('click', autoPlayFirstClick);
-  }, { once: true });
+  }
+
+  // 1. Coba putar otomatis langsung saat halaman dimuat
+  playAudio();
+
+  // 2. Jika browser memblokir, putar otomatis begitu pengguna melakukan klik/touch/key pertama di layar
+  const unlockEvents = ['click', 'touchstart', 'keydown', 'scroll'];
+  const unlockAudio = () => {
+    if (!isPlaying) {
+      playAudio();
+    }
+    unlockEvents.forEach(evt => document.removeEventListener(evt, unlockAudio));
+  };
+
+  unlockEvents.forEach(evt => document.addEventListener(evt, unlockAudio, { once: true }));
+
+  if (playBtn) {
+    playBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMusic();
+    });
+  }
 })();
 
 // --- Script Utama Blair HUD OS ---
