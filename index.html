@@ -1585,22 +1585,31 @@
 
 <!-- Floating SoundCloud Player Widget -->
 <!-- Audio Backsound -->
+<!-- Audio Backsound -->
 <audio id="bgMusic" loop preload="auto">
   <source src="backsound.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-  // Musik otomatis jalan setelah klik pertama di mana saja
-  document.addEventListener('click', function startAudio() {
+  function playAudio() {
     const audio = document.getElementById('bgMusic');
     if (audio) {
-      audio.volume = 0.3; // Volume 30%
-      audio.play().catch(e => console.log(e));
+      audio.volume = 0.3;
+      audio.play().then(() => {
+        console.log("Audio berhasil diputar");
+        // Hapus event listener jika audio sudah berhasil jalan
+        document.removeEventListener('click', playAudio);
+        document.removeEventListener('keydown', playAudio);
+      }).catch(err => {
+        console.log("Gagal memutar audio:", err);
+      });
     }
-  }, { once: true });
-</script>
+  }
 
-<script>
+  // Dengarkan klik ATAU tombol apa saja di keyboard
+  document.addEventListener('click', playAudio);
+  document.addEventListener('keydown', playAudio);
+</script>
 (function(){
   'use strict';
 
